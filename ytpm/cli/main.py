@@ -8,6 +8,7 @@ import sys
 from typing import List
 
 from ytpm.core.manager import Manager
+from ytpm.tui.app import run_tui
 
 
 def _build_parser() -> argparse.ArgumentParser:
@@ -17,6 +18,12 @@ def _build_parser() -> argparse.ArgumentParser:
     )
 
     subparsers = parser.add_subparsers(dest="command", required=True)
+
+    # ytpm tui
+    subparsers.add_parser(
+            "tui",
+            help="Open the interactive TUI for selecting a session.",
+    )
 
     # ytpm ls
     subparsers.add_parser(
@@ -88,6 +95,13 @@ def run(argv: List[str], manager: Manager) -> int:
 
         elif args.command == "kill":
             manager.kill_session(args.name)
+
+        elif args.command == "tui":
+            # TUI uses the real Manager instance; manager here is ManagerProtocol
+            # but in main() we'll pass a real Manager.
+            # Easier: ignore the injected manager here and build a fresh real Manager
+            # inside run_tui.
+            run_tui()
 
         else:
             parser.print_help()
