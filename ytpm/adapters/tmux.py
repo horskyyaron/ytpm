@@ -46,11 +46,24 @@ class TmuxAdapter:
 
     # --- public API ---
     def list_sessions(self) -> List[str]:
-        """Return a list of session names."""
-        output = self._run("list-sessions", "-F", "#S")
+        """Return a list of session names.
+
+        If no tmux server is running, return an empty list.
+        """
+        try:
+            output = self._run("list-sessions", "-F", "#S")
+        except TmuxCommandError as e:
+            # When there is no server, tmux exits with code 1 and this stderr:
+            # "no server running on /tmp/tmux-XXXX/default"
+            if "no server running" in e.stderr:
+                return []
+            # Any other tmux error should still bubble up
+            raise
+
         if not output:
             return []
         return output.splitlines()
+
 
     def session_exists(self, name: str) -> bool:
         """Return True if a session with the given name exists."""
