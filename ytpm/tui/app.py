@@ -29,6 +29,8 @@ class YtpmTui(App[Optional[Tuple[str, str]]]):
     BINDINGS = [
         Binding("q", "quit_app", "Quit"),
         Binding("r", "reload_sessions", "Reload"),
+        Binding("j", "cursor_down", "Down"),
+        Binding("k", "cursor_up", "Up"),
         Binding("enter", "select_session", "Attach/switch"),
     ]
 
@@ -85,6 +87,19 @@ class YtpmTui(App[Optional[Tuple[str, str]]]):
         cwd = os.getcwd()
         # Exit the app and return (name, cwd) to the caller of app.run()
         self.exit((session_name, cwd))
+
+
+    async def action_cursor_down(self) -> None:
+        """Move selection down in the session list (vim-style 'j')."""
+        if self._list_view is not None:
+            # Textual ListView has a built-in action for moving down
+            self._list_view.action_cursor_down()
+
+    async def action_cursor_up(self) -> None:
+        """Move selection up in the session list (vim-style 'k')."""
+        if self._list_view is not None:
+            self._list_view.action_cursor_up()
+
 
     async def on_list_view_selected(self, event: ListView.Selected) -> None:
         """Called when the user presses Enter on a list item."""
