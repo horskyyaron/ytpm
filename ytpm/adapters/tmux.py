@@ -66,13 +66,12 @@ class TmuxAdapter:
 
     def attach(self, name: str) -> None:
         """Attach to the given session (used when outside tmux)."""
-        # Note: this will replace the current process; the caller should be aware.
         self._run("attach", "-t", name)
 
     def switch_client(self, name: str) -> None:
         """Switch the current tmux client to the given session (used inside tmux)."""
-        self._run("switch-client", "-t", name)
+        self._run("switch-client", "-t", name)  
 
     def kill_session(self, name: str) -> None:
         """Kill the given tmux session."""
-        self._run("kill-session", "-t", name)
+        self._run("kill-session", "-t", name)  
