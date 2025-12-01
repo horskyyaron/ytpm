@@ -17,6 +17,7 @@ Extend later.
 - list open sessions
 - navigate between open sessions
 - create new sessions
+- kill sessions
 
 In later versions:
 
