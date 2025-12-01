@@ -74,7 +74,7 @@ class TmuxAdapter:
             return False
 
     def create_session(self, name: str, cwd: str) -> None:
-        """Create a new detached session with the given name and working directory."""
+        """Create a new detached session with the given name and working directory. tmux is running"""
         self._run("new-session", "-d", "-s", name, "-c", cwd)
 
     def attach(self, name: str) -> None:
