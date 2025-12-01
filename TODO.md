@@ -1,11 +1,11 @@
 # Multiplexer adapter layer
 
-- [ ] list_sessions 
-- [ ] session_exists 
-- [ ] create_session
-- [ ] attach_session 
-- [ ] switch_client 
-- [ ] kill_session 
+- [X] list_sessions 
+- [X] session_exists 
+- [X] create_session
+- [X] attach_session 
+- [X] switch_client 
+- [X] kill_session 
 
 # Core
 
